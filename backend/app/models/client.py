@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 
-class Student(Base):
-    __tablename__ = "students"
+class Client(Base):
+    __tablename__ = "clients"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
@@ -18,5 +18,5 @@ class Student(Base):
     status = Column(String, default="active", nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
-    guardian = relationship("Guardian", uselist=False, back_populates="student")
-    academic_info = relationship("AcademicInfo", uselist=False, back_populates="student")
+    guardian = relationship("Guardian", uselist=False, back_populates="client")
+    academic_info = relationship("AcademicInfo", uselist=False, back_populates="client")

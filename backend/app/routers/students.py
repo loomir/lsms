@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.schemas.student import StudentCreate
+from app.schemas.student import ClientCreate
 from app.services.student_service import student_service
 
 router = APIRouter(
@@ -18,7 +18,7 @@ def students_test():
 
 @router.post("/")
 def create_student(
-    student: StudentCreate,
+    student: ClientCreate,
     db: Session = Depends(get_db)
 ):
     try:

@@ -1,13 +1,13 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.student import Student
+from app.models.client import Client
 from app.models.academic_info import AcademicInfo
-from app.schemas.student import StudentCreate
+from app.schemas.client import ClientCreate
 
 
-def create_student(db: Session, student: StudentCreate) -> Student:
-    db_student = Student(
+def create_student(db: Session, student: ClientCreate) -> Client:
+    db_student = Client(
         name=student.name,
         email=student.email,
         dob=student.dob,
@@ -39,27 +39,27 @@ def create_student(db: Session, student: StudentCreate) -> Student:
 
 
 def get_students(db: Session):
-    statement = select(Student)
+    statement = select(Client)
     return db.execute(statement).scalars().all()
 
 
 def get_student_by_id(db: Session, student_id: int):
-    statement = select(Student).where(Student.id == student_id)
+    statement = select(Client).where(Client.id == student_id)
     return db.execute(statement).scalar_one_or_none()
 
 
 def get_student_by_email(db: Session, email: str):
-    statement = select(Student).where(Student.email == email)
+    statement = select(Client).where(Client.email == email)
     return db.execute(statement).scalar_one_or_none()
 
 
-def update_student(db: Session, student: Student):
+def update_student(db: Session, student: Client):
     db.add(student)
     db.commit()
     db.refresh(student)
     return student
 
 
-def delete_student(db: Session, student: Student):
+def delete_student(db: Session, student: Client):
     db.delete(student)
     db.commit()

@@ -6,12 +6,12 @@ from app.repositories.student_repository import (
     get_students,
     get_student_by_email,
 )
-from app.schemas.student import StudentCreate
+from app.schemas.student import ClientCreate
 
 
 class StudentService:
 
-    def create_student(self, db: Session, student: StudentCreate):
+    def create_student(self, db: Session, student: ClientCreate):
         existing = get_student_by_email(db, student.email)
         if existing:
             raise ValueError("Student email already exists")
