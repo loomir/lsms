@@ -25,7 +25,7 @@ class AcademicInfo(BaseModel):
     }
 
 
-class ClientCreate(BaseModel):
+class UserProfileCreate(BaseModel):
     name: str
     email: EmailStr
     dob: date
@@ -41,7 +41,7 @@ class ClientCreate(BaseModel):
     }
 
 
-class ClientUpdate(BaseModel):
+class UserProfileUpdate(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
     dob: Optional[date]
@@ -66,7 +66,7 @@ class AcademicInfoResponse(AcademicInfo):
     pass
 
 
-class ClientResponse(BaseModel):
+class UserProfileResponse(BaseModel):
     id: int
     name: str
     email: EmailStr
@@ -83,8 +83,8 @@ class ClientResponse(BaseModel):
     }
 
 
-class ClientListResponse(BaseModel):
-    clients: list[ClientResponse]
+class UserProfileListResponse(BaseModel):
+    user_profiles: list[UserProfileResponse]
     total: int
     page: int
     page_size: int
@@ -92,3 +92,9 @@ class ClientListResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+
+ClientCreate = UserProfileCreate
+ClientUpdate = UserProfileUpdate
+ClientResponse = UserProfileResponse
+ClientListResponse = UserProfileListResponse

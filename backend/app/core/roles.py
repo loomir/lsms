@@ -7,6 +7,7 @@ class Role(str, Enum):
     staff = "staff"
     teacher = "teacher"
     student = "student"
+    client = "client"
 
 
 ALL_ROLES = [role.value for role in Role]
