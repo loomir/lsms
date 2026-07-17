@@ -6,7 +6,7 @@ from app.models.academic_info import AcademicInfo
 from app.schemas.client import ClientCreate
 
 
-def create_student(db: Session, student: ClientCreate) -> Client:
+def create_client(db: Session, student: ClientCreate) -> Client:
     db_student = Client(
         name=student.name,
         email=student.email,
@@ -38,28 +38,28 @@ def create_student(db: Session, student: ClientCreate) -> Client:
     return db_student
 
 
-def get_students(db: Session):
+def get_clients(db: Session):
     statement = select(Client)
     return db.execute(statement).scalars().all()
 
 
-def get_student_by_id(db: Session, student_id: int):
+def get_client_by_id(db: Session, student_id: int):
     statement = select(Client).where(Client.id == student_id)
     return db.execute(statement).scalar_one_or_none()
 
 
-def get_student_by_email(db: Session, email: str):
+def get_client_by_email(db: Session, email: str):
     statement = select(Client).where(Client.email == email)
     return db.execute(statement).scalar_one_or_none()
 
 
-def update_student(db: Session, student: Client):
+def update_client(db: Session, student: Client):
     db.add(student)
     db.commit()
     db.refresh(student)
     return student
 
 
-def delete_student(db: Session, student: Client):
+def delete_client(db: Session, student: Client):
     db.delete(student)
     db.commit()
