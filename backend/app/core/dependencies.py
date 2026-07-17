@@ -55,9 +55,11 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 
-def role_permission(*allowed_roles: Role):
+def require_role(*roles: str | Role):
+    allowed_roles = {role.value if isinstance(role, Role) else role for role in roles}
+
     def permission(user: User = Depends(get_current_user)) -> User:
-        if user.role not in [role.value for role in allowed_roles]:
+        if user.role not in allowed_roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Operation not permitted"
@@ -67,5 +69,24 @@ def role_permission(*allowed_roles: Role):
     return permission
 
 
+def require_admin():
+    return require_role(Role.admin, Role.superadmin)
+
+
+def require_staff():
+    return require_role(Role.staff, Role.admin, Role.superadmin)
+
+
+def require_teacher():
+    return require_role(Role.teacher, Role.staff, Role.admin, Role.superadmin)
+
+
+def require_student():
+    return require_role(Role.student)
+
+
 # Convenience dependency for admin-level access
-get_current_admin = role_permission(Role.admin, Role.superadmin)
+get_current_admin = require_admin()
+
+# Backwards-compatible alias for existing code
+role_permission = require_role
