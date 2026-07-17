@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.schemas.student import ClientCreate
-from app.services.student_service import student_service
+from app.services.client_service import student_service
 
 router = APIRouter(
     prefix="/students",
@@ -22,7 +22,7 @@ def create_student(
     db: Session = Depends(get_db)
 ):
     try:
-        return student_service.create_student(db, student)
+        return student_service.create_client(db, student)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -31,4 +31,4 @@ def create_student(
 def get_students(
     db: Session = Depends(get_db)
 ):
-    return student_service.get_students(db)
+    return student_service.get_clients(db)
