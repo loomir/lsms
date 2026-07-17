@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import auth, students, admissions, dashboard
+from app.routers import auth, students, admissions, dashboard, user_profiles
 from app.database.init_db import init_db
 
 
@@ -14,6 +14,7 @@ app.include_router(auth.router)
 app.include_router(students.router)
 app.include_router(admissions.router)
 app.include_router(dashboard.router)
+app.include_router(user_profiles.router)
 
 
 @app.on_event("startup")

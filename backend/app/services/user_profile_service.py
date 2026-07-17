@@ -4,6 +4,7 @@ from app.repositories.user_profile_repository import (
     create_user_profile,
     get_user_profiles,
     get_user_profile_by_email,
+    get_user_profile_by_id,
 )
 from app.schemas.user_profile import UserProfileCreate
 
@@ -19,6 +20,9 @@ class UserProfileService:
 
     def get_user_profiles(self, db: Session):
         return get_user_profiles(db)
+
+    def get_user_profile_by_id(self, db: Session, user_profile_id: int):
+        return get_user_profile_by_id(db, user_profile_id)
 
     def create_client(self, db: Session, user_profile: UserProfileCreate):
         return self.create_user_profile(db, user_profile)
